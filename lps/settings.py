@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'project',
+    'account_app.apps.AccountAppConfig',
 ]
 
 MIDDLEWARE = [
@@ -85,6 +86,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'account_app.Account'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
