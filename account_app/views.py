@@ -2,11 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from rest_framework_simplejwt.tokens import AccessToken
-from django.contrib.auth.hashers import make_password
+from django.http import JsonResponse
 from .models import UserProfile
 from .serializers import SignupSerializer, UserProfileSerializer
 
@@ -61,6 +62,14 @@ def login(request):
         return Response(response_data, status=status.HTTP_200_OK)
     else:
         return Response({'error': 'Invalid email or password'}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+def logout_view(request):
+    if request.method == "POST":
+        logout(request)
+        return JsonResponse({"message": "Logout successful"}, status=200)
+    return JsonResponse({"error": "Invalid request"}, status=400)
 
 
 
